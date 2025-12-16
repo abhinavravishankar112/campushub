@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block title %}Resources — CampusHub{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <!-- Left column -->
+  <div class="col-md-6">
+    <h3>Your Resources</h3>
+    <p class="text-muted">Track books, videos and courses you're using.</p>
+
+    <div class="card fade-in">
+      <div class="card-body p-0">
+        <table class="table table-bordered" id="resources-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in resources %}
+            <tr data-id="{{ r.id }}">
+              <td>{{ r.name }}</td>
+              <td>{{ r.type }}</td>
+              <td>
+                <select class="form-select resource-status">
+                  <option {% if r.status == 'Not Started' %}selected{% endif %}>Not Started</option>
+                  <option {% if r.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                  <option {% if r.status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+              </td>
+              <td><button class="btn btn-sm btn-danger resource-delete">Delete</button></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4">No resources yet — add one on the right.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right column -->
+  <div class="col-md-6">
+    <h3>Add Resource</h3>
+
+    <form method="post">
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input name="name" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Type</label>
+        <input name="type" class="form-control" placeholder="Book, Video, Course, Movie..." />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="status" class="form-select">
+          <option>Not Started</option>
+          <option>In Progress</option>
+          <option>Completed</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary">Add Resource</button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='resources.js') }}"></script>
+{% endblock %}

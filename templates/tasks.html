@@ -1,0 +1,79 @@
+{% extends "layout.html" %}
+{% block title %}Tasks — CampusHub{% endblock %}
+
+{% block content %}
+<div class="row">
+
+  <div class="col-md-6">
+    <h3>Your Tasks</h3>
+    <p class="text-muted">Manage, prioritise, and mark tasks as complete.</p>
+
+    <table class="table table-striped" id="tasks-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Deadline</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in tasks %}
+        <tr data-id="{{ t.id }}" class="{% if t.completed %}table-secondary{% endif %}">
+          <td>
+            <input type="checkbox" class="task-toggle" {% if t.completed %}checked{% endif %} />
+          </td>
+          <td class="task-title">{{ t.title }}</td>
+          <td>{{ t.category or 'General' }}</td>
+          <td>{{ t.deadline or '-' }}</td>
+          <td>
+            <button class="btn btn-sm btn-danger task-delete">Delete</button>
+          </td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5">No tasks yet — add one on the right.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-md-6">
+    <h3>Add Task</h3>
+
+    <div class="card fade-in">
+      <div class="card-body">
+        <form method="post" action="/tasks/add" id="add-task-form">
+
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input name="title" class="form-control" required />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Description (optional)</label>
+            <textarea name="description" class="form-control" rows="3"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Deadline</label>
+            <input name="deadline" type="date" class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <input name="category" class="form-control" placeholder="Assignment, Exam, Personal..." />
+          </div>
+
+          <button class="btn btn-primary">Add Task</button>
+
+        </form>
+      </div>
+    </div>
+
+  </div> <!-- END col-md-6 -->
+
+</div> <!-- END row -->
+
+<script src="{{ url_for('static', filename='tasks.js') }}"></script>
+{% endblock %}

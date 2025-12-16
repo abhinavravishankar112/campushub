@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard — CampusHub{% endblock %}
+
+{% block content %}
+
+<div class="row mb-4">
+  <div class="col-12">
+    <h1>Welcome back 👋</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-8">
+    <div class="card mb-4 fade-in">
+      <div class="card-body">
+        <h5 class="card-title">Tasks Completed (last 14 days)</h5>
+        <div class="chart-container" style="position: relative; width: 100%; overflow-x: hidden;">
+  <canvas id="taskProgressChart"></canvas>
+</div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card mb-4 fade-in">
+      <div class="card-body">
+        <h5 class="card-title">Quick stats</h5>
+        <p id="quick-stats">Loading…</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+
+{% endblock %}
