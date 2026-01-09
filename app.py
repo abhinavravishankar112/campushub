@@ -320,3 +320,7 @@ def resources_delete(res_id):
     db.commit()
 
     return jsonify({"success": True})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
